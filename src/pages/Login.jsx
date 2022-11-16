@@ -29,7 +29,6 @@ export default function Login() {
         },
         validationSchema: SignupSchema,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
             apiLogin(values)
             .then((response) => {
                 console.log("res", response.data);

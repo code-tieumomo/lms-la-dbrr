@@ -185,3 +185,17 @@ input:-webkit-autofill:active {
   font-size: 10px;
   font-family: 'Quicksand', sans-serif;
 }
+input:invalid {
+  animation: shake .3s;
+}
+@keyframes shake {
+  25% {
+    transform: translateX(4px)
+  }
+  50% {
+    transform: translateX(-4px)
+  }
+  75% {
+    transform: translateX(4px)
+  }
+}
