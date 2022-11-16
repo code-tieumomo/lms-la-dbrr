@@ -63,7 +63,7 @@ body {
   font-size: 12px;
 }
 
-.login-box form a {
+.login-box form button a {
   position: relative;
   display: inline-block;
   padding: 10px 20px;
@@ -176,4 +176,12 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     transition:  5000s ease-in-out 0s;
+}
+.btn__submit {
+  background-color: transparent !important;
+}
+.err__form {
+  color: red;
+  font-size: 10px;
+  font-family: 'Quicksand', sans-serif;
 }
