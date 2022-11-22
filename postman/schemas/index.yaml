@@ -70,9 +70,50 @@ paths:
                                             id:
                                                 type: string
                                                 description: Id của giảng viên (quan trọng mặc dù không có vẫn request được ??)
-                                                example: 62cc21e25b877e1a3bc873cb                
+                                                example: 62cc21e25b877e1a3bc873cb
+    /classes:
+        get:
+            summary: Lấy danh sách lớp học theo id giảng viên
+            description: Lấy danh sách lớp học theo id của giảng viên
+            security:
+                - bearerAuth: []
+            requestBody:
+                description: Request body cần thiết để thực hiện lấy danh sách lớp học
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                teacherId:
+                                    type: string
+                                    description: Id giảng viên
+                                    example: 62cc21e25b877e1a3bc873cb
+                                page:
+                                    type: integer
+                                    description: Số trang
+                                    example: 1
+                                number:
+                                    type: integer
+                                    description: Số bản ghi trên một trang
+                                    example: 20
+                            required:
+                                - teacherId
+                                - page
+                                - number
+            responses:
+                "200":
+                    description: Mảng danh sách lớp học
 
 components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+            description: >-
+                Access token đã lấy ở phần login với prefix `Bearer: `, e.g. "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4MDljZmYxMTZ...".
+
     schemas:
         Account:
             type: object
@@ -88,17 +129,3 @@ components:
                     type: string
                     description: Password của tài khoản LMS tương ứng
                     example: ●●●●●●●●
-        # TokenWrapper:
-        #     type: object
-        #     properties:
-        #         idToken:
-        #             type: string
-        #             description: accessToken dùng cho các request tiếp theo
-        #         kind:
-        #             type: string
-        #         refreshToken:
-        #             type: string
-        #         expiresIn:
-        #             type: string
-        #         isNewUser:
-        #             type: boolean
