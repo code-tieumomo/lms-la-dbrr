@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+    title: LMSApi Documentation
+    version: 1.0.0
+
+servers:
+    - url: http://54.151.174.209/api
+      description: Production server
+    - url: http://localhost:8000/api
+      description: Local development server
+
+paths:
+    /login:
+        post:
+            summary: Login sử dụng tài khoản LMS sẵn có
+            description: Login sử dụng `email` và `password` như trên LMS
+            requestBody:
+                description: Request body cần thiết để thực hiện login
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+            responses:
+                "200":
+                    description: Object chứa accessToken và một số thông tin khác
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TokenWrapper"
+
+components:
+    schemas:
+        Account:
+            type: object
+            properties:
+                email:
+                    type: string
+                    description: Email sử dụng để đăng nhập LMS
+                password:
+                    type: string
+                    description: Password của tài khoản LMS tương ứng
+        TokenWrapper:
+            type: object
+            properties:
+                idToken:
+                    type: string
+                    description: accessToken dùng cho các request tiếp theo
+                kind:
+                    type: string
+                refreshToken:
+                    type: string
+                expiresIn:
+                    type: string
+                isNewUser:
+                    type: boolean
