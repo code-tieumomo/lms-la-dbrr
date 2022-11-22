@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", fn () => response()->json(['message' => '༼ つ ◕_◕ ༽つ']));
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
-
 Route::post('/account', [AuthController::class, 'getAccountInfo'])->name('auth.account');
 
-Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
+Route::group(['middleware' => 'access_token'], function () {
+    Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
+    Route::get('/classes/{id}', [ClassController::class, 'show'])->name('classes.show');
+});

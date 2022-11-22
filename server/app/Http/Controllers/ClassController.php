@@ -8,15 +8,6 @@ class ClassController extends Controller
 {
     public function index(Request $request)
     {
-        $rawToken = $request->header('Authorization');
-
-        if ($rawToken === null || str_starts_with($rawToken, 'Bearer ') === false) {
-            return response()->json([
-                'error' => 'No token provided',
-            ], 401);
-        }
-
-        $token = str_replace('Bearer ', '', $rawToken);
         $page = $request->page ?? 1;
         $number = $request->number ?? 20;
         $teacherId = $request->teacherId ?? null;
@@ -48,7 +39,7 @@ class ClassController extends Controller
              }
             ',
             CURLOPT_HTTPHEADER => [
-                'Authorization: ' . $token,
+                'Authorization: ' . $request->token,
                 'Content-Type: application/json',
             ],
         ]);
@@ -71,15 +62,6 @@ class ClassController extends Controller
 
     public function getClassesWithoutTeacherId(Request $request)
     {
-        $rawToken = $request->header('Authorization');
-
-        if ($rawToken === null || str_starts_with($rawToken, 'Bearer ') === false) {
-            return response()->json([
-                'error' => 'No token provided',
-            ], 401);
-        }
-
-        $token = str_replace('Bearer ', '', $rawToken);
         $page = $request->page ?? 1;
         $number = $request->number ?? 20;
 
@@ -141,7 +123,54 @@ class ClassController extends Controller
                 }
             ',
             CURLOPT_HTTPHEADER => [
-                'Authorization: ' . $token,
+                'Authorization: ' . $request->token,
+                'Content-Type: application/json',
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+        }
+
+        curl_close($curl);
+
+        if (isset($error_msg)) {
+            return response()->json([
+                'error' => $error_msg,
+            ], 400);
+        }
+
+        return response()->json(json_decode($response));
+    }
+
+    public function show(Request $request, $id)
+    {
+        $classEndpoint = 'https://lms-api.mindx.vn/';
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $classEndpoint,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '
+                {
+                    "operationName":"GetClassById",
+                    "variables":{
+                        "id":"' . $id . '"
+                    },
+                    "query":"query GetClassById($id: ID!) {\n  classesById(id: $id) {\n    id\n    name\n    course {\n      id\n      name\n      shortName\n      isActive\n      numberOfSession\n      sessionHour\n      description\n      minStudents\n      maxEnrollSession\n      maxStudents\n      optimalStudents\n      oneSessionSettings {\n        _id\n        classRole {\n          id\n          name\n          shortName\n          description\n          isActive\n          createdAt\n          createdBy\n          lastModifiedAt\n          lastModifiedBy\n        }\n        quantity\n      }\n      sessionSettings {\n        _id\n        sessionNumber\n        settings {\n          _id\n          classRole {\n            id\n            name\n            shortName\n            description\n            isActive\n            createdAt\n            createdBy\n            lastModifiedAt\n            lastModifiedBy\n          }\n          quantity\n        }\n      }\n    }\n    startDate\n    endDate\n    status\n    centre {\n      id\n      name\n      shortName\n      hotline\n      email\n      address\n      isActive\n    }\n    histories {\n      action\n      changes {\n        op\n        path\n        from\n        to\n      }\n      createdBy {\n        displayName\n      }\n      createdAt\n    }\n    openingRoomNo\n    numberOfSessions\n    numberOfSessionsStatus\n    sessionHour\n    totalHour\n    slots {\n      _id\n      date\n      startTime\n      endTime\n      sessionHour\n      teachers {\n        _id\n        teacher {\n          id\n          username\n          code\n          fullName\n          email\n          phoneNumber\n          user\n          imageUrl\n        }\n        role {\n          id\n          name\n          shortName\n        }\n        isActive\n      }\n      teacherAttendance {\n        _id\n        teacher {\n          id\n          username\n          fullName\n          email\n          phoneNumber\n          user\n          imageUrl\n        }\n        status\n        note\n        createdBy\n        createdAt\n        lastModifiedBy\n        lastModifiedAt\n      }\n      studentAttendance {\n        _id\n        student {\n          id\n          fullName\n          phoneNumber\n          email\n          gender\n          imageUrl\n          customer {\n            email\n          }\n        }\n        comment\n        sendCommentStatus\n        status\n        commentByAreas {\n          grade\n          content\n          commentAreaId\n        }\n        createdBy\n        createdAt\n        lastModifiedBy\n        lastModifiedAt\n      }\n      summary\n      homework\n      createdAt\n      createdBy\n      lastModifiedAt\n      lastModifiedBy\n    }\n    scheduleSettings {\n      _id\n      date\n      startTime\n      endTime\n      repeated\n    }\n    students {\n      _id\n      student {\n        id\n        fullName\n        phoneNumber\n        email\n        gender\n        dob\n        address\n        imageUrl\n        facebook\n        zalo\n        school\n        customer {\n          fullName\n          phoneNumber\n          email\n          facebook\n          zalo\n        }\n      }\n      note\n      activeInClass\n      completed\n      createdBy\n      createdAt\n    }\n    teachers {\n      _id\n      teacher {\n        id\n        username\n        fullName\n        imageUrl\n        email\n        phoneNumber\n      }\n      role {\n        id\n        name\n        shortName\n        description\n        isActive\n      }\n      isActive\n    }\n    operator {\n      id\n      email\n      firstName\n      middleName\n      lastName\n      displayName\n      username\n    }\n    contactTeacher {\n      id\n      email\n      phoneNumber\n      fullName\n      code\n      username\n    }\n    hasSchedule\n    links {\n      _id\n      name\n      url\n    }\n    createdBy\n    createdAt\n    lastModifiedBy\n    lastModifiedAt\n  }\n}\n"
+                }
+            ',
+            CURLOPT_HTTPHEADER => [
+                'Authorization: ' . $request->token,
                 'Content-Type: application/json',
             ],
         ]);
