@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ClassController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get("/", fn() => response()->json(['message' => '༼ つ ◕_◕ ༽つ']));
+Route::get("/", fn () => response()->json(['message' => '༼ つ ◕_◕ ༽つ']));
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::post('/account', [AuthController::class, 'getAccountInfo'])->name('auth.account');
+
+Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
