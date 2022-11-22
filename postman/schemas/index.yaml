@@ -1,7 +1,10 @@
 openapi: 3.0.0
 info:
     title: LMSApi Documentation
+    description: LMSApi
     version: 1.0.0
+    contact:
+        email: code.tieumomo@gmail.com
 
 servers:
     - url: http://54.151.174.209/api
@@ -20,37 +23,82 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Account"
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: Email sử dụng để đăng nhập LMS
+                                    example: phamhongquan.it@gmail.com
+                                password:
+                                    type: string
+                                    description: Password của tài khoản LMS tương ứng
+                                    example: ●●●●●●●●
+                            required:
+                                - email
+                                - password
             responses:
                 "200":
-                    description: Object chứa accessToken và một số thông tin khác
+                    description: Object chứa thông tin đăng nhập và giảng viên
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/TokenWrapper"
+                                type: object
+                                properties:
+                                    expiresIn:
+                                        type: string
+                                        description: Thời gian tồn tại của phiên đăng nhập hiện tại
+                                        example: 3600
+                                    idToken:
+                                        type: string
+                                        description: Access Token (quan trọng) dùng để xác thực cho các request tiếp theo sau khi đăng nhập
+                                        example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4MDljZmYxMTZ...
+                                    isNewUser:
+                                        type: boolean
+                                        description: Có phải là user mới hay không
+                                        example: false
+                                    kind:
+                                        type: string
+                                        example: identitytoolkit#VerifyCustomTokenResponse
+                                    refreshToken:
+                                        type: string
+                                        description: Token dùng để refresh lại phiên đăng nhập (cái này không quan trọng lắm nếu timeout thì đăng nhập lại từ đầu)
+                                        example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImY4MDljZmYxMTZ...
+                                    info:
+                                        type: object
+                                        description: Object chứa thông tin chi tiết về giảng viên
+                                        properties:
+                                            id:
+                                                type: string
+                                                description: Id của giảng viên (quan trọng mặc dù không có vẫn request được ??)
+                                                example: 62cc21e25b877e1a3bc873cb                
 
 components:
     schemas:
         Account:
             type: object
+            required:
+                - email
+                - password
             properties:
                 email:
                     type: string
                     description: Email sử dụng để đăng nhập LMS
+                    example: phamhongquan.it@gmail.com
                 password:
                     type: string
                     description: Password của tài khoản LMS tương ứng
-        TokenWrapper:
-            type: object
-            properties:
-                idToken:
-                    type: string
-                    description: accessToken dùng cho các request tiếp theo
-                kind:
-                    type: string
-                refreshToken:
-                    type: string
-                expiresIn:
-                    type: string
-                isNewUser:
-                    type: boolean
+                    example: ●●●●●●●●
+        # TokenWrapper:
+        #     type: object
+        #     properties:
+        #         idToken:
+        #             type: string
+        #             description: accessToken dùng cho các request tiếp theo
+        #         kind:
+        #             type: string
+        #         refreshToken:
+        #             type: string
+        #         expiresIn:
+        #             type: string
+        #         isNewUser:
+        #             type: boolean
