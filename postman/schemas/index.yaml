@@ -27,11 +27,11 @@ paths:
                             properties:
                                 email:
                                     type: string
-                                    description: Email sử dụng để đăng nhập LMS
+                                    description: Email sử dụng để đăng nhập LMS. e.g. "phamhongquan.it@gmail.com"
                                     example: phamhongquan.it@gmail.com
                                 password:
                                     type: string
-                                    description: Password của tài khoản LMS tương ứng
+                                    description: Password của tài khoản LMS tương ứng. e.g. "●●●●●●●●"
                                     example: ●●●●●●●●
                             required:
                                 - email
@@ -87,15 +87,15 @@ paths:
                             properties:
                                 teacherId:
                                     type: string
-                                    description: Id giảng viên
+                                    description: Id giảng viên. e.g. "62cc21e25b877e1a3bc873cb"
                                     example: 62cc21e25b877e1a3bc873cb
                                 page:
                                     type: integer
-                                    description: Số trang
+                                    description: Số trang. e.g. 1
                                     example: 1
                                 number:
                                     type: integer
-                                    description: Số bản ghi trên một trang
+                                    description: Số bản ghi trên một trang. e.g. 20
                                     example: 20
                             required:
                                 - teacherId
