@@ -7,7 +7,7 @@ info:
         email: code.tieumomo@gmail.com
 
 servers:
-    - url: http://54.151.174.209/api
+    - url: https://quanph.space/api
       description: Production server
     - url: http://localhost:8000/api
       description: Local development server
@@ -104,6 +104,23 @@ paths:
             responses:
                 "200":
                     description: Mảng danh sách lớp học
+    /classes/{id}:
+        get:
+            summary: Lấy thông tin chi tiết của lớp học
+            description: Lấy thông tin chi tiết của lớp học theo id của lớp học
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: Id của lớp học. e.g. "5f9b9b9b5b877e1a3bc873cb"
+                  schema:
+                      type: string
+                      example: 5f9b9b9b5b877e1a3bc873cb
+            responses:
+                "200":
+                    description: Object chứa thông tin lớp học
 
 components:
     securitySchemes:
