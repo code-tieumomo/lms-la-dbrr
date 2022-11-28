@@ -1,35 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals'
+import React from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
 
-import App from './app'
+import App from "./app";
 
-import { createStore } from 'redux'
+import { Provider } from "react-redux";
+import "./assets/boxicons-2.0.7/css/boxicons.min.css";
+import "./assets/css/grid.css";
+import "./assets/css/theme.css";
+import "./assets/css/index.css";
 
-import { Provider } from 'react-redux'
+import Layout from "./components/layout/Layout";
+import {store} from "./redux/store";
 
-import rootReducer from './redux/reducers'
-
-import './assets/boxicons-2.0.7/css/boxicons.min.css'
-import './assets/css/grid.css'
-import './assets/css/theme.css'
-import './assets/css/index.css'
-
-import Layout from './components/layout/Layout'
-
-const store = createStore(
-  rootReducer
-)
-
-document.title = 'LMS MINDX'
+document.title = "LMS MINDX";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    </Provider>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
