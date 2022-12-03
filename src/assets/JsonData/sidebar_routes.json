@@ -12,7 +12,7 @@
     {
         "display_name": "Profile",
         "route": "/profile",
-        "icon": "bx bx-package"
+        "icon": "bx bx-user"
     },
     {
         "display_name": "Orders",

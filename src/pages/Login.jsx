@@ -35,7 +35,7 @@ export default function Login() {
                 if ( !response.data.error ) {
                     dispatch(exportDefault.updateUser(response.data));
                     const decoded = jwt_decode(response.data.idToken);
-                    localStorage.setItem('profile-mindx', JSON.stringify(decoded));
+                    localStorage.setItem('profile-mindx', JSON.stringify(response.data));
                     localStorage.setItem('accessToken', JSON.stringify(response.data.idToken));
                     toast.success("Đăng nhập thành công !!!!");
                     setTimeout(() => {

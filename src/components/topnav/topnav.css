@@ -75,6 +75,7 @@
 }
 
 .topnav__right-user__name {
+    font-family: "Roboto", sans-serif;
     font-size: 1rem;
     font-weight: 600;
 }

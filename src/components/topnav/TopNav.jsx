@@ -30,10 +30,10 @@ const renderNotificationItem = (item, index) => (
 const renderUserToggle = (user) => (
     <div className="topnav__right-user">
         <div className="topnav__right-user__image">
-            {/* <img src={user.image} alt="" /> */}
+            <img src={user.info.imageUrl} alt="" />
         </div>
         <div className="topnav__right-user__name">
-            {user.name}
+            {user.displayName}
         </div>
     </div>
 )
