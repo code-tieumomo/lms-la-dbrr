@@ -40,8 +40,8 @@ const renderUserToggle = (user) => (
 
 const Topnav = () => {
     const navigate  = useNavigate();
-    const accountState = useSelector(state => state.ThemeReducer);
-    const {profile} = accountState;
+    // const accountState = useSelector(state => state.ThemeReducer);
+    // const {profile} = accountState;
 
     const handleLogout = (content) => {
         switch (content) {

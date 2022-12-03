@@ -164,7 +164,7 @@ const renderOrderBody = (item, index) => (
 
 const Dashboard = () => {
 
-    const themeReducer = useSelector(state => state.ThemeReducer.mode)
+    // const themeReducer = useSelector(state => state.ThemeReducer.mode)
 
     return (
         <div>
@@ -188,7 +188,7 @@ const Dashboard = () => {
                 <div className="col-6">
                     <div className="card full-height">
                         {/* chart */}
-                        <Chart
+                        {/* <Chart
                             options={themeReducer === 'theme-mode-dark' ? {
                                 ...chartOptions.options,
                                 theme: { mode: 'dark'}
@@ -199,7 +199,7 @@ const Dashboard = () => {
                             series={chartOptions.series}
                             type='line'
                             height='100%'
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="col-4">

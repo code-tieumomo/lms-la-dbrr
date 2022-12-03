@@ -29,7 +29,8 @@ const DefaultLayout = ({children}) => {
     
 
     return (
-        <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
+        // <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
+        <div>
             <Sidebar />
             <div className="layout__content">
                 <TopNav/>
