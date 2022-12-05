@@ -32,6 +32,6 @@ class ClassController extends Controller
             ], 404);
         }
 
-        return response()->json($class->data->class);
+        return response()->json($class->data->classesById);
     }
 }
