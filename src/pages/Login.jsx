@@ -12,8 +12,10 @@ import { ToastContainer, toast } from 'react-toast';
 import jwt_decode from "jwt-decode";
 
 import "./index.css";
+import { fetchProfile } from '../redux/reducers/profileSlide';
 
 export default function Login() {
+    const dispatchAction = useDispatch();
     const SignupSchema = Yup.object().shape({
         email: Yup.string().email('Nhap dung dinh dang email').required('Khong de trong'),
         password: Yup.string()
@@ -29,6 +31,7 @@ export default function Login() {
         },
         validationSchema: SignupSchema,
         onSubmit: values => {
+            dispatchAction(fetchProfile(values))
             apiLogin(values)
             .then((response) => {
                 console.log("res", response.data);

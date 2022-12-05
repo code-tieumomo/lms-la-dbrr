@@ -27,19 +27,22 @@ const renderNotificationItem = (item, index) => (
     </div>
 )
 
-const renderUserToggle = (user) => (
-    <div className="topnav__right-user">
-        <div className="topnav__right-user__image">
-            <img src={user.info.imageUrl} alt="" />
-        </div>
-        <div className="topnav__right-user__name">
-            {user.displayName}
-        </div>
-    </div>
-)
 
 const Topnav = () => {
     const navigate  = useNavigate();
+    const accountState = useSelector(state => state.profile);
+    const displayName = accountState.profile.info.fullName;
+
+    const renderUserToggle = (user) => (
+        <div className="topnav__right-user">
+            <div className="topnav__right-user__image">
+                <img src={user.info.imageUrl} alt="" />
+            </div>
+            <div className="topnav__right-user__name">
+                {displayName || user.displayName}
+            </div>
+        </div>
+    )
     // const accountState = useSelector(state => state.ThemeReducer);
     // const {profile} = accountState;
 
