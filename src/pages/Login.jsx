@@ -1,7 +1,6 @@
 import  axios  from 'axios';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useHistory, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -13,9 +12,11 @@ import jwt_decode from "jwt-decode";
 
 import "./index.css";
 import { fetchProfile } from '../redux/reducers/profileSlide';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const dispatchAction = useDispatch();
+    const history = useNavigate();
     const SignupSchema = Yup.object().shape({
         email: Yup.string().email('Nhap dung dinh dang email').required('Khong de trong'),
         password: Yup.string()
@@ -32,31 +33,12 @@ export default function Login() {
         validationSchema: SignupSchema,
         onSubmit: values => {
             dispatchAction(fetchProfile(values))
-            apiLogin(values)
-            .then((response) => {
-                console.log("res", response.data);
-                if ( !response.data.error ) {
-                    dispatch(exportDefault.updateUser(response.data));
-                    const decoded = jwt_decode(response.data.idToken);
-                    localStorage.setItem('profile-mindx', JSON.stringify(response.data));
-                    localStorage.setItem('accessToken', JSON.stringify(response.data.idToken));
-                    toast.success("Đăng nhập thành công !!!!");
-                    setTimeout(() => {
-                        history('/admin');
-                    }, 1000);
-                } else {
-                    localStorage.removeItem('profile-mindx');
-                    toast.error("Mời bạn nhập đúng tài khoản")
-                }
-            })
-            .catch (error => {
-                toast.error("Mời bạn nhập đúng tài khoản")
-            })
+            setTimeout(() =>{
+                history("/admin");
+            }, 1000)
         },
     });
 
-    let history = useNavigate();
-    let dispatch = useDispatch();
     return (
         <>
             <div className="login-box">

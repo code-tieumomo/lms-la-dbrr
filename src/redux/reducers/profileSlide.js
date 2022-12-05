@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toast";
 import { apiLogin } from "../../service/loginApi";
+
+
 
 const initialState = {
     status: '',
@@ -28,16 +31,16 @@ const profile = createSlice(
 ) 
 
 export const fetchProfile = createAsyncThunk ('profile/fetchProfile', async (value) => {
-    const res  = await apiLogin(value);
-    // const decoded = jwt_decode(response.data.idToken);
-    console.log("res", res.data)
-    localStorage.setItem('profile-mindx', JSON.stringify(res.data));
-    localStorage.setItem('accessToken', JSON.stringify(res.data.idToken));
-    toast.success("Đăng nhập thành công !!!!");
-    // setTimeout(() => {
-    //     history('/admin');
-    // }, 1000);
-    return res.data;
+    try {
+
+        const res  = await apiLogin(value);
+        localStorage.setItem('profile-mindx', JSON.stringify(res.data));
+        localStorage.setItem('accessToken', JSON.stringify(res.data.idToken));
+        toast.success("Đăng nhập thành công !!!!");
+    }
+    catch(err) {
+        toast.error("Mời bạn nhập đúng tài khoản")
+    }
 })
 
 export default profile;
