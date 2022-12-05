@@ -26,5 +26,5 @@ Route::post('/account', [AuthController::class, 'getAccountInfo'])->name('auth.a
 
 Route::group(['middleware' => 'access_token'], function () {
     Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
-    Route::get('/classes/{id}', [ClassController::class, 'show'])->name('classes.show');
+    Route::post('/classes/{id}', [ClassController::class, 'show'])->name('classes.show');
 });
