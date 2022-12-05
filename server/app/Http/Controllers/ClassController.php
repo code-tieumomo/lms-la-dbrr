@@ -26,7 +26,11 @@ class ClassController extends Controller
     public function show(Request $request, $id)
     {
         $class = APIService::getClassById($request->token, $id);
-        dd($class);
+        if (isset($class->errors)) {
+            return response()->json([
+                'error' => $class->errors[0]->message,
+            ], 404);
+        }
 
         return response()->json($class->data->class);
     }
